@@ -19,13 +19,17 @@ export default class CoolBotList {
     let sendTotalGuilds: boolean;
     let sendTotalUsers: boolean;
     let sendPresence: boolean;
+
+    sendTotalGuilds = data.sendPresence;
+    sendTotalUsers = data.sendTotalUsers;
+    sendPresence = data.sendPresence;
     if (!data) {
       sendTotalGuilds = true;
       sendTotalUsers = true;
       sendPresence = true;
     }
     setInterval(async () => {
-      const r = await axios.put("http://localhost:5000/api/bots/client", { token: this.config.token, client: this.config.client, sendTotalGuilds: data.sendTotalGuilds, sendPresence: data.sendPresence, sendUsers: data.sendTotalUsers });
+      const r = await axios.put("http://localhost:5000/api/bots/client", { token: this.config.token, client: this.config.client, sendTotalGuilds, sendTotalUsers, sendPresence });
       if (r.status === 200 || r.status === 201) {
         if (!this.config.logging) return;
         else return r.data.message;
