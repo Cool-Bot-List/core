@@ -4,16 +4,13 @@ import InitData from './interfaces/InitData';
 import CoolBotListConfig from './interfaces/CoolBotListConfig';
 
 export default class CoolBotList {
-  private intervalNumber = 90000;
-  private logging = true;
+
 
   constructor(private config: CoolBotListConfig) {
     if (!config.token || !config.client || config.client !instanceof Client) throw new Error('Please provide a valid config.');
-    if(900000 < config.interval) this.intervalNumber = 90000;
-    else this.intervalNumber = config.interval;
-    if(!config.logging) {
-      console.log('this is false or it doesnt exist')
-    }
+    if(900000 < config.interval) config.interval = 90000;
+    if(config.logging === undefined)  config.logging = true;
+    
   } 
 
   /**
@@ -42,6 +39,6 @@ export default class CoolBotList {
         if (!this.config.logging) return;
         else return r.data.message;
       }
-    }, this.intervalNumber);
+    }, this.config.interval);
   }
 }
