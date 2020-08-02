@@ -1,3 +1,5 @@
 export default interface InitData {
-  token: string
+  sendTotalGuilds: boolean;
+  sendTotalUsers: boolean;
+  sendPresence: boolean
 }
