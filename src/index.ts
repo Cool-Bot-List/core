@@ -15,6 +15,7 @@ export default class CoolBotList {
    * @param {}
    */
 
+  // should we call this send instead?
   init(data: InitData) {
     let sendTotalGuilds: boolean;
     let sendTotalUsers: boolean;
