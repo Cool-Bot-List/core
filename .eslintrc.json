@@ -1,0 +1,45 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2020": true,
+    "node": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 11
+  },
+  "rules": {
+    "indent": [
+      "error",
+      4
+    ],
+    "quotes": [
+      "error",
+      "double"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "max-len": [
+      "error",
+      {
+        "code": 250
+      }
+    ],
+    "comma-dangle": [
+      "warn",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "never",
+        "exports": "never",
+        "functions": "never"
+      }
+    ],
+    "camelcase": [
+      "error"
+    ]
+  }
+}
