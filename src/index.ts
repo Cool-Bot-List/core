@@ -10,6 +10,17 @@ export default class CoolBotList {
     if (config.logging === undefined) config.logging = true;
   }
 
+  public sendPresence() {
+    setInterval(async () => {
+      axios.put("http://localhost:5000/api/bots/client", {
+        client: this.config.client,
+        sendTotalGuilds: false,
+        sendTotalUsers: false,
+        sendPresence: true,
+      });
+    }, this.config.interval);
+  }
+
   /**
    * Initialize your discord bot.
    * @param {object} data - Information about how to send the data.
