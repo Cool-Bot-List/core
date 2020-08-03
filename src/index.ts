@@ -6,8 +6,10 @@ import CoolBotListConfig from "./interfaces/CoolBotListConfig";
 export default class CoolBotList {
   constructor(private config: CoolBotListConfig) {
     if (!config.token || !config.client || config.client! instanceof Client) throw new Error("Please provide a valid config.");
-    if (900000 < config.interval) config.interval = 90000;
-    if (config.logging === undefined) config.logging = true;
+    if (config.interval) {
+      if (900000 < config.interval) config.interval = 90000;
+      if (config.logging === undefined) config.logging = true;
+    }
   }
 
   /**
