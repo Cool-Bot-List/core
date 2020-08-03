@@ -12,7 +12,10 @@ export default class CoolBotList {
 
   /**
    * Initialize your discord bot.
-   * @param {}
+   * @param {object} data - Information about how to send the data.
+   * @param {boolean} data.sendTotalGuilds - Whether to send the total amount of guilds the bot is in.
+   * @param {boolean} data.sendTotalUsers - Whether to send the total amount of users the bot has.
+   * @param {boolean} data.sendPresence - Whether to send the current presence of the bot. (online, dnd, away, invisible )
    */
 
   // should we call this send instead?
