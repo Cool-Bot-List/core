@@ -4,6 +4,10 @@ import InitData from "./interfaces/InitData";
 import CoolBotListConfig from "./interfaces/CoolBotListConfig";
 
 export default class CoolBotList {
+  /**
+   * A way to send the bots data to CoolBotList.tk
+   * @param {object } config - Settings for
+   */
   constructor(private config: CoolBotListConfig) {
     if (!config.token || !config.client || config.client! instanceof Client) throw new Error("Please provide a valid config.");
     if (900000 < config.interval) config.interval = 90000;
