@@ -12,6 +12,7 @@ export default class CoolBotList {
         if (!config.token || !config.client || config.client! instanceof Client) throw new Error("Please provide a valid config.");
         if (900000 < config.interval) config.interval = 90000;
         if (config.logging === undefined) config.logging = true;
+        config.logging;
     }
 
     /**

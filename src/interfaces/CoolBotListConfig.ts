@@ -1,12 +1,23 @@
 import { Client } from "discord.js";
-/**
- * Options of the CoolBotList class
- *@typedef {object} CoolBotListConfig
- *@property {string} token - The api token.
- */
+
 export default interface MainConfig {
+    /**
+     *  The api token.
+     */
     token: string;
+    /**
+     *  The discord client used to make your bot.
+     */
     client: Client;
+    /**
+     *  The interval in ms you want to send data to the api at.
+     * The default is 90000.
+     */
     interval: number;
+    /**
+     *  If true it will send return data back to the methods.
+     *  If false it will not send return data back.
+     *  The default for this true
+     */
     logging: boolean;
 }
