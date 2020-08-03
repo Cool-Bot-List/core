@@ -20,9 +20,9 @@ export default class CoolBotList {
 
   // should we call this send instead?
   init(data: InitData) {
-    let sendTotalGuilds: boolean;
-    let sendTotalUsers: boolean;
-    let sendPresence: boolean;
+    let sendTotalGuilds: boolean | undefined;
+    let sendTotalUsers: boolean | undefined;
+    let sendPresence: boolean | undefined;
 
     sendTotalGuilds = data.sendPresence;
     sendTotalUsers = data.sendTotalUsers;
