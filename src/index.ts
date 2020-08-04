@@ -22,6 +22,7 @@ export default class CoolBotList {
   public sendPresence(): void {
     setInterval(async () => {
       axios.put("http://localhost:5000/api/bots/client", {
+        token: this.config.token,
         client: this.config.client,
         sendTotalGuilds: false,
         sendTotalUsers: false,
@@ -50,7 +51,13 @@ export default class CoolBotList {
     }
 
     setInterval(async () => {
-      const r = await axios.put("http://localhost:5000/api/bots/client", { token: this.config.token, client: this.config.client, sendTotalGuilds, sendTotalUsers, sendPresence });
+      const r = await axios.put("http://localhost:5000/api/bots/client", {
+        token: this.config.token,
+        client: this.config.client,
+        sendTotalGuilds,
+        sendTotalUsers,
+        sendPresence,
+      });
       if (r.status === 200 || r.status === 201) {
         if (!this.config.logging) return;
         else return r.data.message;
@@ -64,5 +71,9 @@ const botList = new CoolBotList({
   client,
   token: "asjdfjiweofjafasmfnsodfjh",
 });
-
+// sends EVERYTHING
 botList.init();
+// sends everything BUT presence
+botList.init({ sendPresence: false });
+// ONLY sends presence
+botList.sendPresence();
