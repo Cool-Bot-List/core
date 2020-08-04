@@ -12,8 +12,10 @@ export default class CoolBotList {
     if (!config.token || !config.client || !(config.client instanceof Client)) throw new Error("Please provide a valid config.");
     if (config.logging === undefined) config.logging = true;
     if (config.interval) {
-      if (900000 < config.interval) config.interval = 90000;
+      if (900000 > config.interval) config.interval = 90000;
     } else if (config.interval === undefined) config.interval = 90000;
+    const test = config.client.toJSON();
+    //@ts-ignore
   }
 
   /**
@@ -40,16 +42,22 @@ export default class CoolBotList {
     let sendTotalGuilds: boolean | undefined;
     let sendTotalUsers: boolean | undefined;
     let sendPresence: boolean | undefined;
+    console.log("init");
     if (data) {
+      console.log("This has Data.");
       if (data.sendTotalGuilds === undefined) sendTotalGuilds = true;
       if (data.sendTotalUsers === undefined) sendTotalUsers = true;
-      if (data.sendPresence == undefined) sendPresence = true;
+      if (data.sendPresence === undefined) {
+        sendPresence = true;
+        console.log(data.sendPresence, sendPresence);
+      }
     } else {
+      console.log("in the else");
       sendTotalGuilds = true;
       sendTotalUsers = true;
       sendPresence = true;
     }
-
+    console.log(`guilds: ${sendTotalGuilds}\nusers: ${sendTotalUsers}\npresence: ${sendPresence}`);
     setInterval(async () => {
       const r = await axios.put("http://localhost:5000/api/bots/client", {
         token: this.config.token,
@@ -68,13 +76,20 @@ export default class CoolBotList {
 
 // Example
 const client = new Client();
-const botList = new CoolBotList({
-  client,
-  token: "asjdfjiweofjafasmfnsodfjh",
+client.login("HIDDEN");
+
+client.on("ready", () => {
+  const botList = new CoolBotList({
+    client,
+    token: "asjdfjiweofjafasmfnsodfjh",
+    interval: 10,
+  });
+  // // sends EVERYTHING
+  // botList.init();
+  // // sends everything BUT presence
+  // botList.init({ sendPresence: false });
+  // // ONLY sends presence
+  // botList.sendPresence();
+
+  botList.init({ sendPresence: false });
 });
-// sends EVERYTHING
-botList.init();
-// sends everything BUT presence
-botList.init({ sendPresence: false });
-// ONLY sends presence
-botList.sendPresence();
