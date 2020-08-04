@@ -14,8 +14,6 @@ export default class CoolBotList {
     if (config.interval) {
       if (900000 > config.interval) config.interval = 90000;
     } else if (config.interval === undefined) config.interval = 90000;
-    const test = config.client.toJSON();
-    //@ts-ignore
   }
 
   /**
