@@ -4,6 +4,10 @@ import InitData from "./interfaces/InitData";
 import CoolBotListConfig from "./interfaces/CoolBotListConfig";
 
 export default class CoolBotList {
+  /**
+   * A way to send the bots data to localhost:3000
+   * @param {CoolBotListConfig} config - Settings for the the CoolBotList
+   */
   constructor(private config: CoolBotListConfig) {
     if (!config.token || !config.client || config.client! instanceof Client) throw new Error("Please provide a valid config.");
     if (config.logging === undefined) config.logging = true;
@@ -14,10 +18,7 @@ export default class CoolBotList {
 
   /**
    * Initialize your discord bot.
-   * @param {object} data - Information about how to send the data.
-   * @param {boolean} data.sendTotalGuilds - Whether to send the total amount of guilds the bot is in.
-   * @param {boolean} data.sendTotalUsers - Whether to send the total amount of users the bot has.
-   * @param {boolean} data.sendPresence - Whether to send the current presence of the bot. (online, dnd, away, invisible )
+   * @param {InitData} data - Information about how to send the data.
    */
 
   // should we call this send instead?
