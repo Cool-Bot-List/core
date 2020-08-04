@@ -9,8 +9,10 @@ export default class CoolBotList {
     if (900000 < config.interval) config.interval = 90000;
     if (config.logging === undefined) config.logging = true;
   }
-
-  public sendPresence() {
+  /**
+   * Sends the presence of the bot to the API.
+   */
+  public sendPresence(): void {
     setInterval(async () => {
       axios.put("http://localhost:5000/api/bots/client", {
         client: this.config.client,
