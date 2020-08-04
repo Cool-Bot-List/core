@@ -35,7 +35,7 @@ export default class CoolBotList {
    * @param data - Information about how to send the data.
    */
   // should we call this send instead?
-  public init(data: InitData): void {
+  public init(data?: InitData): void {
     let sendTotalGuilds: boolean | undefined = data.sendPresence;
     let sendTotalUsers: boolean | undefined = data.sendTotalUsers;
     let sendPresence: boolean | undefined = data.sendPresence;
@@ -59,3 +59,5 @@ const botList = new CoolBotList({
   client,
   token: "asjdfjiweofjafasmfnsodfjh",
 });
+
+botList.init();
