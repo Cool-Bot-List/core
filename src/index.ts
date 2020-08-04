@@ -13,7 +13,7 @@ export default class CoolBotList {
     if (config.logging === undefined) config.logging = true;
     if (config.interval) {
       if (900000 < config.interval) config.interval = 90000;
-    }
+    } else if (config.interval === undefined) config.interval = 90000;
   }
 
   /**
@@ -57,3 +57,9 @@ export default class CoolBotList {
     }, this.config.interval);
   }
 }
+
+const client = new Client();
+const botList = new CoolBotList({
+  client,
+  token: "asjdfjiweofjafasmfnsodfjh",
+});
