@@ -33,7 +33,6 @@ export default class CoolBotList {
    * Initialize your discord bot.
    * @param data - Information about how to send the data.
    */
-
   // should we call this send instead?
   public init(data: InitData): void {
     let sendTotalGuilds: boolean | undefined;
@@ -44,15 +43,15 @@ export default class CoolBotList {
     sendTotalUsers = data.sendTotalUsers;
     sendPresence = data.sendPresence;
 
+    if (data.sendTotalGuilds === undefined) sendTotalGuilds = true;
+    if (data.sendTotalUsers === undefined) sendTotalUsers = true;
+    if (data.sendPresence == undefined) sendPresence = true;
+
     if (!data) {
       sendTotalGuilds = true;
       sendTotalUsers = true;
       sendPresence = true;
     }
-
-    if (data.sendTotalGuilds === undefined) sendTotalGuilds = true;
-    if (data.sendTotalUsers === undefined) sendTotalUsers = true;
-    if (data.sendPresence == undefined) sendPresence = true;
 
     setInterval(async () => {
       const r = await axios.put("http://localhost:5000/api/bots/client", { token: this.config.token, client: this.config.client, sendTotalGuilds, sendTotalUsers, sendPresence });
