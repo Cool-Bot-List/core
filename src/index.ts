@@ -39,20 +39,16 @@ export default class CoolBotList {
    */
   // should we call this send instead?
   public init(data?: InitData): void {
-    let sendTotalGuilds: boolean | undefined;
-    let sendTotalUsers: boolean | undefined;
-    let sendPresence: boolean | undefined;
-    console.log("init");
+    let sendTotalGuilds: boolean | undefined = data?.sendTotalGuilds;
+    let sendTotalUsers: boolean | undefined = data?.sendTotalUsers;
+    let sendPresence: boolean | undefined = data?.sendPresence;
+
     if (data) {
       console.log("This has Data.");
       if (data.sendTotalGuilds === undefined) sendTotalGuilds = true;
       if (data.sendTotalUsers === undefined) sendTotalUsers = true;
-      if (data.sendPresence === undefined) {
-        sendPresence = true;
-        console.log(data.sendPresence, sendPresence);
-      }
+      if (data.sendPresence === undefined) sendPresence = true;
     } else {
-      console.log("in the else");
       sendTotalGuilds = true;
       sendTotalUsers = true;
       sendPresence = true;
@@ -76,7 +72,7 @@ export default class CoolBotList {
 
 // Example
 const client = new Client();
-client.login("HIDDEN");
+client.login("SECERT");
 
 client.on("ready", () => {
   const botList = new CoolBotList({
@@ -91,5 +87,5 @@ client.on("ready", () => {
   // // ONLY sends presence
   // botList.sendPresence();
 
-  botList.init({ sendPresence: false });
+  botList.init();
 });
