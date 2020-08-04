@@ -36,13 +36,18 @@ export default class CoolBotList {
    */
   // should we call this send instead?
   public init(data?: InitData): void {
-    let sendTotalGuilds: boolean | undefined = data.sendPresence;
-    let sendTotalUsers: boolean | undefined = data.sendTotalUsers;
-    let sendPresence: boolean | undefined = data.sendPresence;
-
-    if (data.sendTotalGuilds === undefined) sendTotalGuilds = true;
-    if (data.sendTotalUsers === undefined) sendTotalUsers = true;
-    if (data.sendPresence == undefined) sendPresence = true;
+    let sendTotalGuilds: boolean | undefined;
+    let sendTotalUsers: boolean | undefined;
+    let sendPresence: boolean | undefined;
+    if (data) {
+      if (data.sendTotalGuilds === undefined) sendTotalGuilds = true;
+      if (data.sendTotalUsers === undefined) sendTotalUsers = true;
+      if (data.sendPresence == undefined) sendPresence = true;
+    } else {
+      sendTotalGuilds = true;
+      sendTotalUsers = true;
+      sendPresence = true;
+    }
 
     setInterval(async () => {
       const r = await axios.put("http://localhost:5000/api/bots/client", { token: this.config.token, client: this.config.client, sendTotalGuilds, sendTotalUsers, sendPresence });
