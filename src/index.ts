@@ -6,7 +6,7 @@ import CoolBotListConfig from "./interfaces/CoolBotListConfig";
 export default class CoolBotList {
   /**
    * A way to send the bots data to localhost:3000
-   * @param {CoolBotListConfig} config - Settings for the the CoolBotList
+   * @param config - Settings for the the CoolBotList
    */
   constructor(private config: CoolBotListConfig) {
     if (!config.token || !config.client || config.client! instanceof Client) throw new Error("Please provide a valid config.");
@@ -31,7 +31,7 @@ export default class CoolBotList {
 
   /**
    * Initialize your discord bot.
-   * @param {InitData} data - Information about how to send the data.
+   * @param data - Information about how to send the data.
    */
 
   // should we call this send instead?
