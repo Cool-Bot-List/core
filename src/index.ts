@@ -15,6 +15,7 @@ export default class CoolBotList {
       if (900000 < config.interval) config.interval = 90000;
     }
   }
+
   /**
    * Sends the presence of the bot to the API.
    */
