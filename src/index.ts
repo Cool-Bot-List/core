@@ -21,7 +21,7 @@ export default class CoolBotList {
    */
 
   // should we call this send instead?
-  init(data: InitData) {
+  public init(data: InitData): void {
     let sendTotalGuilds: boolean | undefined;
     let sendTotalUsers: boolean | undefined;
     let sendPresence: boolean | undefined;
