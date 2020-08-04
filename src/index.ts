@@ -66,6 +66,7 @@ export default class CoolBotList {
   }
 }
 
+// Example
 const client = new Client();
 const botList = new CoolBotList({
   client,
