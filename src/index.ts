@@ -51,7 +51,7 @@ export default class CoolBotList {
     }, this.config.interval);
   }
   /**
-   * Sends the presence of the bot to the API.
+   * Sends the current presence of the bot to the API. (online, dnd, away, invisible, ect. )
    */
   public sendPresence(): void {
     setInterval(async () => {
