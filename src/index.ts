@@ -15,22 +15,6 @@ export default class CoolBotList {
       if (900000 > config.interval) config.interval = 90000;
     } else if (config.interval === undefined) config.interval = 90000;
   }
-
-  /**
-   * Sends the presence of the bot to the API.
-   */
-  public sendPresence(): void {
-    setInterval(async () => {
-      axios.put("http://localhost:5000/api/bots/client", {
-        token: this.config.token,
-        client: this.config.client,
-        sendTotalGuilds: false,
-        sendTotalUsers: false,
-        sendPresence: true,
-      });
-    }, this.config.interval);
-  }
-
   /**
    * Initialize your discord bot.
    * @param data - Information about how to send the data.
@@ -64,6 +48,20 @@ export default class CoolBotList {
         if (!this.config.logging) return;
         else return r.data.message;
       }
+    }, this.config.interval);
+  }
+  /**
+   * Sends the presence of the bot to the API.
+   */
+  public sendPresence(): void {
+    setInterval(async () => {
+      axios.put("http://localhost:5000/api/bots/client", {
+        token: this.config.token,
+        client: this.config.client,
+        sendTotalGuilds: false,
+        sendTotalUsers: false,
+        sendPresence: true,
+      });
     }, this.config.interval);
   }
 }
