@@ -64,6 +64,12 @@ export default class CoolBotList {
       });
     }, this.config.interval);
   }
+  /**
+   * Sends the total amount of users the bot has.
+   */
+  public sendTotalUsers() {
+    // code later
+  }
 }
 
 // Example
