@@ -40,15 +40,17 @@ export default class CoolBotList {
       const r = await axios.put("http://localhost:5000/api/bots/client", {
         token: this.config.token,
         client: this.config.client,
+        presence: this.config.client.user!.presence,
         sendTotalGuilds,
         sendTotalUsers,
         sendPresence,
       });
+      console.log(r);
       if (r.status === 200 || r.status === 201) {
         if (!this.config.logging) return;
         else return r.data.message;
       }
-    }, this.config.interval);
+    }, 1000);
   }
   /**
    * Sends the current presence of the bot to the API. (online, dnd, away, invisible, ect. )
@@ -58,6 +60,7 @@ export default class CoolBotList {
       axios.put("http://localhost:5000/api/bots/client", {
         token: this.config.token,
         client: this.config.client,
+        presence: this.config.client.user!.presence,
         sendTotalGuilds: false,
         sendTotalUsers: false,
         sendPresence: true,
@@ -68,7 +71,7 @@ export default class CoolBotList {
 
 // Example
 const client = new Client();
-client.login("SECERT");
+client.login("");
 
 client.on("ready", () => {
   const botList = new CoolBotList({
@@ -83,5 +86,6 @@ client.on("ready", () => {
   // // ONLY sends presence
   // botList.sendPresence();
 
-  botList.init();
+  const test = botList.init();
+  console.log(test);
 });
