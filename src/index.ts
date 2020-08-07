@@ -57,7 +57,7 @@ export default class CoolBotList {
         if (!this.config.logging) return;
         else return r.data.message;
       }
-    }, 1000);
+    }, this.config.interval);
   }
   /**
    * Sends the current presence of the bot to the API. (online, dnd, away, invisible, ect. )
@@ -90,7 +90,7 @@ client.login("");
 client.on("ready", () => {
   const botList = new CoolBotList({
     client,
-    token: "asjdfjiweofjafasmfnsodfjh",
+    token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNDgxMTU4NjMyMDA4OTc0MzM3In0sImlhdCI6MTU5NjgyNjU4Mn0.71mY03QCkHvmZWgb3_1ahUv0xTf8td_pLdgDOj2ZVRo",
     interval: 10,
   });
   // // sends EVERYTHING

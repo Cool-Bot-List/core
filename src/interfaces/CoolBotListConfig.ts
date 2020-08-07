@@ -1,6 +1,6 @@
 import { Client } from "discord.js";
 
-export default interface MainConfig {
+export default interface CoolBotListConfig {
   /**
    *  The API token.
    */
