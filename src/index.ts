@@ -2,7 +2,6 @@ import axios, { AxiosResponse } from "axios";
 import { Client } from "discord.js";
 import InitData from "./interfaces/InitData";
 import CoolBotListConfig from "./interfaces/CoolBotListConfig";
-import ApiData from "./interfaces/ApiData";
 
 export default class CoolBotList {
   /**
@@ -20,7 +19,7 @@ export default class CoolBotList {
    * @param data - Information about how to send the data.
    */
   // should we call this send instead?
-  public init(data?: InitData): void | ApiData {
+  public init(data?: InitData): void {
     let sendTotalGuilds: boolean | undefined = data?.sendTotalGuilds;
     let sendTotalUsers: boolean | undefined = data?.sendTotalUsers;
     let sendPresence: boolean | undefined = data?.sendPresence;
