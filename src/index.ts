@@ -9,11 +9,13 @@ export default class CoolBotList {
    * @param config - Settings for the the CoolBotList
    */
   constructor(private config: CoolBotListConfig) {
+    super();
     if (!config.token || !config.client || !(config.client instanceof Client)) throw new Error("Please provide a valid config.");
     if (config.interval) {
       if (900000 > config.interval) config.interval = 90000;
     } else if (config.interval === undefined) config.interval = 90000;
   }
+
   /**
    * Initialize your discord bot.
    * @param data - Information about how to send the data.
