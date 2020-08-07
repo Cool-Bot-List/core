@@ -37,14 +37,21 @@ export default class CoolBotList {
     }
     console.log(`guilds: ${sendTotalGuilds}\nusers: ${sendTotalUsers}\npresence: ${sendPresence}`);
     setInterval(async () => {
-      const r = await axios.put("http://localhost:5000/api/bots/client", {
-        token: this.config.token,
-        client: this.config.client,
-        presence: this.config.client.user!.presence,
-        sendTotalGuilds,
-        sendTotalUsers,
-        sendPresence,
-      });
+      const r = await axios.put(
+        "http://localhost:5000/api/bots/client",
+        {
+          client: this.config.client,
+          presence: this.config.client.user!.presence,
+          sendTotalGuilds,
+          sendTotalUsers,
+          sendPresence,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${this.config.token}`,
+          },
+        },
+      );
       console.log(r);
       if (r.status === 200 || r.status === 201) {
         if (!this.config.logging) return;
@@ -57,14 +64,21 @@ export default class CoolBotList {
    */
   public sendPresence(): void {
     setInterval(async () => {
-      axios.put("http://localhost:5000/api/bots/client", {
-        token: this.config.token,
-        client: this.config.client,
-        presence: this.config.client.user!.presence,
-        sendTotalGuilds: false,
-        sendTotalUsers: false,
-        sendPresence: true,
-      });
+      axios.put(
+        "http://localhost:5000/api/bots/client",
+        {
+          client: this.config.client,
+          presence: this.config.client.user!.presence,
+          sendTotalGuilds: false,
+          sendTotalUsers: false,
+          sendPresence: true,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${this.config.token}`,
+          },
+        },
+      );
     }, this.config.interval);
   }
 }
