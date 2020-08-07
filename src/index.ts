@@ -67,27 +67,27 @@ export default class CoolBotList {
   /**
    * Sends the total amount of users the bot has.
    */
-  public sendTotalUsers() {
-    // code later
+  public sendTotalUsers(): void {
+    setInterval(async () => {
+      try {
+        await axios.put(
+          "http://localhost:5000/api/bots/client",
+          {
+            client: this.config.client,
+            presence: this.config.client.user!.presence,
+            sendTotalGuilds: false,
+            sendTotalUsers: true,
+            sendPresence: false,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${this.config.token}`,
+            },
+          },
+        );
+      } catch (err) {
+        throw new Error(err);
+      }
+    }, this.config.interval);
   }
 }
-
-// Example
-const client = new Client();
-client.login("SECERT");
-
-client.on("ready", () => {
-  const botList = new CoolBotList({
-    client,
-    token: "asjdfjiweofjafasmfnsodfjh",
-    interval: 10,
-  });
-  // // sends EVERYTHING
-  // botList.init();
-  // // sends everything BUT presence
-  // botList.init({ sendPresence: false });
-  // // ONLY sends presence
-  // botList.sendPresence();
-
-  botList.init();
-});
