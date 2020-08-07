@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { Client } from "discord.js";
 import InitData from "./interfaces/InitData";
 import CoolBotListConfig from "./interfaces/CoolBotListConfig";
@@ -11,7 +11,6 @@ export default class CoolBotList {
    */
   constructor(private config: CoolBotListConfig) {
     if (!config.token || !config.client || !(config.client instanceof Client)) throw new Error("Please provide a valid config.");
-    if (config.logging === undefined) config.logging = true;
     if (config.interval) {
       if (900000 > config.interval) config.interval = 90000;
     } else if (config.interval === undefined) config.interval = 90000;
@@ -35,29 +34,26 @@ export default class CoolBotList {
       sendTotalUsers = true;
       sendPresence = true;
     }
-    console.log(`guilds: ${sendTotalGuilds}\nusers: ${sendTotalUsers}\npresence: ${sendPresence}`);
+
     setInterval(async () => {
-      const r = await axios.put(
-        "http://localhost:5000/api/bots/client",
-        {
-          client: this.config.client,
-          presence: this.config.client.user!.presence,
-          sendTotalGuilds,
-          sendTotalUsers,
-          sendPresence,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${this.config.token}`,
+      try {
+        await axios.put(
+          "http://localhost:5000/api/bots/client",
+          {
+            client: this.config.client,
+            presence: this.config.client.user!.presence,
+            sendTotalGuilds,
+            sendTotalUsers,
+            sendPresence,
           },
-        },
-      );
-      if (r.status === 200 || r.status === 201) {
-        if (this.config.logging === true) return;
-        else if (this.config.logging === false) {
-          console.log(r.data);
-          return r.data;
-        }
+          {
+            headers: {
+              Authorization: `Bearer ${this.config.token}`,
+            },
+          },
+        );
+      } catch (err) {
+        throw new Error(err);
       }
     }, this.config.interval);
   }
@@ -102,6 +98,4 @@ client.on("ready", () => {
   // botList.sendPresence();
 
   const test = botList.init();
-
-  console.log(test);
 });
