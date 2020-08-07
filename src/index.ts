@@ -78,6 +78,29 @@ export default class CoolBotList {
       );
     }, this.config.interval);
   }
+
+  /**
+   * Sends the total amount of guilds that the bot is in.
+   */
+  public sendTotalGuilds(): void {
+    setInterval(async () => {
+      axios.put(
+        "http://localhost:5000/api/bots/client",
+        {
+          client: this.config.client,
+          presence: this.config.client.user!.presence,
+          sendTotalGuilds: true,
+          sendTotalUsers: false,
+          sendPresence: false,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${this.config.token}`,
+          },
+        },
+      );
+    }, this.config.interval);
+  }
 }
 
 // Example
