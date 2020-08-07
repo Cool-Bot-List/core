@@ -2,6 +2,7 @@ import axios from "axios";
 import { Client } from "discord.js";
 import InitData from "./interfaces/InitData";
 import CoolBotListConfig from "./interfaces/CoolBotListConfig";
+import ApiData from "./interfaces/ApiData";
 
 export default class CoolBotList {
   /**
@@ -20,7 +21,7 @@ export default class CoolBotList {
    * @param data - Information about how to send the data.
    */
   // should we call this send instead?
-  public init(data?: InitData): void {
+  public init(data?: InitData): void | ApiData {
     let sendTotalGuilds: boolean | undefined = data?.sendTotalGuilds;
     let sendTotalUsers: boolean | undefined = data?.sendTotalUsers;
     let sendPresence: boolean | undefined = data?.sendPresence;
@@ -51,10 +52,12 @@ export default class CoolBotList {
           },
         },
       );
-      console.log(r);
       if (r.status === 200 || r.status === 201) {
-        if (!this.config.logging) return;
-        else return r.data.message;
+        if (this.config.logging === true) return;
+        else if (this.config.logging === false) {
+          console.log(r.data);
+          return r.data;
+        }
       }
     }, this.config.interval);
   }
@@ -99,5 +102,6 @@ client.on("ready", () => {
   // botList.sendPresence();
 
   const test = botList.init();
+
   console.log(test);
 });
