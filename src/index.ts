@@ -26,7 +26,6 @@ export default class CoolBotList {
     let sendPresence: boolean | undefined = data?.sendPresence;
 
     if (data) {
-      console.log("This has Data.");
       if (data.sendTotalGuilds === undefined) sendTotalGuilds = true;
       if (data.sendTotalUsers === undefined) sendTotalUsers = true;
       if (data.sendPresence === undefined) sendPresence = true;
@@ -91,7 +90,6 @@ client.on("ready", () => {
   const botList = new CoolBotList({
     client,
     token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNDgxMTU4NjMyMDA4OTc0MzM3In0sImlhdCI6MTU5NjgyNjU4Mn0.71mY03QCkHvmZWgb3_1ahUv0xTf8td_pLdgDOj2ZVRo",
-    interval: 10,
   });
   // // sends EVERYTHING
   // botList.init();
