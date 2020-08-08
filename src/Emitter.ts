@@ -1,6 +1,6 @@
 import { EventEmitter } from "events";
 import io from "socket.io-client";
-import { Snowflake } from "./interfaces/Snowflake";
+import { snowflake } from "./interfaces/snowflake";
 import Vote from "./interfaces/Vote";
 import CoolBotListConfig from "./interfaces/CoolBotListConfig";
 import { Events } from "./constants/Events";
@@ -17,7 +17,7 @@ class Emitter extends EventEmitter implements Emitter {
   constructor(protected config: CoolBotListConfig) {
     super();
 
-    this.socket.on("vote", (vote: Vote, userId: Snowflake) => {
+    this.socket.on("vote", (vote: Vote, userId: snowflake) => {
       console.log("test");
       console.log(new Date(vote.date).toLocaleString());
       const date = new Date(vote.date);
@@ -32,6 +32,6 @@ class Emitter extends EventEmitter implements Emitter {
 }
 
 declare interface Emitter {
-  on(event: "vote", listener: (vote: Vote, userId: Snowflake) => void): this;
+  on(event: "vote", listener: (vote: Vote, userId: snowflake) => void): this;
 }
 export default Emitter;
