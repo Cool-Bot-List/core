@@ -18,13 +18,10 @@ class Emitter extends EventEmitter implements Emitter {
     super();
 
     this.socket.on("vote", (vote: Vote, userId: snowflake) => {
-      console.log("test");
-      console.log(new Date(vote.date).toLocaleString());
       const date = new Date(vote.date);
       vote.date = date;
 
       if (vote.bot === this.config.client.user?.id) {
-        console.log(true, "emitted");
         this.emit(Events.vote, vote, userId);
       }
     });
