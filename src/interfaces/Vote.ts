@@ -1,4 +1,4 @@
-import { Snowflake } from "./snowflake";
+import { Snowflake } from "./Snowflake";
 
 /**
  * Represents a bot vote object.
@@ -9,7 +9,7 @@ export default interface Vote {
    */
   bot: Snowflake;
   /**
-   * The date that the vote happened.
+   * The time that the vote happened.
    */
-  date: Date;
+  date: string | Date;
 }

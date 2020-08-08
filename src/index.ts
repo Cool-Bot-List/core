@@ -2,14 +2,16 @@ import axios, { AxiosResponse } from "axios";
 import { Client } from "discord.js";
 import InitData from "./interfaces/InitData";
 import CoolBotListConfig from "./interfaces/CoolBotListConfig";
+import Emitter from "./Emitter";
+import { Events } from "./constants/Events";
 
-export default class CoolBotList {
+export default class CoolBotList extends Emitter {
   /**
    * A way to send the bots data to localhost:3000
    * @param config - Settings for the the CoolBotList
    */
-  constructor(private config: CoolBotListConfig) {
-    super();
+  constructor(protected config: CoolBotListConfig) {
+    super(config);
     if (!config.token || !config.client || !(config.client instanceof Client)) throw new Error("Please provide a valid config.");
     if (config.interval) {
       if (900000 > config.interval) config.interval = 90000;
@@ -107,19 +109,24 @@ export default class CoolBotList {
 
 // Example
 const client = new Client();
-client.login("");
+client.login("NzM1MjczMzQ4ODc1MDI2NTcz.Xxd2qw.wsedzPvDzFmhPRc7Onv7EkHTspA");
 
 client.on("ready", () => {
+  console.log("asfd");
   const botList = new CoolBotList({
     client,
     token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNDgxMTU4NjMyMDA4OTc0MzM3In0sImlhdCI6MTU5NjgyNjU4Mn0.71mY03QCkHvmZWgb3_1ahUv0xTf8td_pLdgDOj2ZVRo",
   });
+
   // // sends EVERYTHING
   // botList.init();
   // // sends everything BUT presence
   // botList.init({ sendPresence: false });
   // // ONLY sends presence
   // botList.sendPresence();
-
-  const test = botList.init();
+  botList.on("vote", (vote, userId) => {
+    console.log(`A user voted: ${userId}`);
+    console.log(`Vote: ${JSON.stringify(vote)}`);
+    console.log(vote);
+  });
 });
