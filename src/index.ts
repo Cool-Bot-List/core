@@ -105,6 +105,32 @@ export default class CoolBotList extends Emitter {
       );
     }, this.config.interval);
   }
+  /**
+   * Sends the total amount of users the bot has.
+   */
+  public sendTotalUsers(): void {
+    setInterval(async () => {
+      try {
+        await axios.put(
+          "http://localhost:5000/api/bots/client",
+          {
+            client: this.config.client,
+            presence: this.config.client.user!.presence,
+            sendTotalGuilds: false,
+            sendTotalUsers: true,
+            sendPresence: false,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${this.config.token}`,
+            },
+          },
+        );
+      } catch (err) {
+        throw new Error(err);
+      }
+    }, this.config.interval);
+  }
 }
 
 // Example
