@@ -1,6 +1,6 @@
 import { Client } from "discord.js";
 
-export default interface MainConfig {
+export default interface CoolBotListConfig {
   /**
    *  The API token.
    */
@@ -14,10 +14,4 @@ export default interface MainConfig {
    * The default is 90000.
    */
   interval?: number;
-  /**
-   *  If true it will send return data back to the methods.
-   *  If false it will not send return data back.
-   *  The default for this true
-   */
-  logging?: boolean;
 }

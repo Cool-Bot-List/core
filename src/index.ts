@@ -1,20 +1,23 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { Client } from "discord.js";
 import InitData from "./interfaces/InitData";
 import CoolBotListConfig from "./interfaces/CoolBotListConfig";
+import Emitter from "./Emitter";
+import { Events } from "./constants/Events";
 
-export default class CoolBotList {
+export default class CoolBotList extends Emitter {
   /**
    * A way to send the bots data to localhost:3000
    * @param config - Settings for the the CoolBotList
    */
-  constructor(private config: CoolBotListConfig) {
+  constructor(protected config: CoolBotListConfig) {
+    super(config);
     if (!config.token || !config.client || !(config.client instanceof Client)) throw new Error("Please provide a valid config.");
-    if (config.logging === undefined) config.logging = true;
     if (config.interval) {
       if (900000 > config.interval) config.interval = 90000;
     } else if (config.interval === undefined) config.interval = 90000;
   }
+
   /**
    * Initialize your discord bot.
    * @param data - Information about how to send the data.
@@ -26,7 +29,6 @@ export default class CoolBotList {
     let sendPresence: boolean | undefined = data?.sendPresence;
 
     if (data) {
-      console.log("This has Data.");
       if (data.sendTotalGuilds === undefined) sendTotalGuilds = true;
       if (data.sendTotalUsers === undefined) sendTotalUsers = true;
       if (data.sendPresence === undefined) sendPresence = true;
@@ -35,33 +37,72 @@ export default class CoolBotList {
       sendTotalUsers = true;
       sendPresence = true;
     }
-    console.log(`guilds: ${sendTotalGuilds}\nusers: ${sendTotalUsers}\npresence: ${sendPresence}`);
+
     setInterval(async () => {
-      const r = await axios.put("http://localhost:5000/api/bots/client", {
-        token: this.config.token,
-        client: this.config.client,
-        sendTotalGuilds,
-        sendTotalUsers,
-        sendPresence,
-      });
-      if (r.status === 200 || r.status === 201) {
-        if (!this.config.logging) return;
-        else return r.data.message;
+      try {
+        await axios.put(
+          "http://localhost:5000/api/bots/client",
+          {
+            client: this.config.client,
+            presence: this.config.client.user!.presence,
+            sendTotalGuilds,
+            sendTotalUsers,
+            sendPresence,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${this.config.token}`,
+            },
+          },
+        );
+      } catch (err) {
+        throw new Error(err);
       }
     }, this.config.interval);
   }
   /**
-   * Sends the presence of the bot to the API.
+   * Sends the current presence of the bot to the API. (online, dnd, away, invisible, ect. )
    */
   public sendPresence(): void {
     setInterval(async () => {
-      axios.put("http://localhost:5000/api/bots/client", {
-        token: this.config.token,
-        client: this.config.client,
-        sendTotalGuilds: false,
-        sendTotalUsers: false,
-        sendPresence: true,
-      });
+      axios.put(
+        "http://localhost:5000/api/bots/client",
+        {
+          client: this.config.client,
+          presence: this.config.client.user!.presence,
+          sendTotalGuilds: false,
+          sendTotalUsers: false,
+          sendPresence: true,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${this.config.token}`,
+          },
+        },
+      );
+    }, this.config.interval);
+  }
+
+  /**
+   * Sends the total amount of guilds that the bot is in.
+   */
+  public sendTotalGuilds(): void {
+    setInterval(async () => {
+      axios.put(
+        "http://localhost:5000/api/bots/client",
+        {
+          client: this.config.client,
+          presence: this.config.client.user!.presence,
+          sendTotalGuilds: true,
+          sendTotalUsers: false,
+          sendPresence: false,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${this.config.token}`,
+          },
+        },
+      );
     }, this.config.interval);
   }
   /**
@@ -91,3 +132,27 @@ export default class CoolBotList {
     }, this.config.interval);
   }
 }
+
+// Example
+const client = new Client();
+client.login("");
+
+client.on("ready", () => {
+  console.log("asfd");
+  const botList = new CoolBotList({
+    client,
+    token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNDgxMTU4NjMyMDA4OTc0MzM3In0sImlhdCI6MTU5NjgyNjU4Mn0.71mY03QCkHvmZWgb3_1ahUv0xTf8td_pLdgDOj2ZVRo",
+  });
+
+  // // sends EVERYTHING
+  // botList.init();
+  // // sends everything BUT presence
+  // botList.init({ sendPresence: false });
+  // // ONLY sends presence
+  // botList.sendPresence();
+  botList.on("vote", (vote, userId) => {
+    console.log(`A user voted: ${userId}`);
+    console.log(`Vote: ${JSON.stringify(vote)}`);
+    console.log(vote);
+  });
+});
