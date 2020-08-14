@@ -1,0 +1,41 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "extends": "plugin:@typescript-eslint/recommended",
+    "parserOptions": {
+        "ecmaVersion": 11,
+        "sourceType": "module"
+    },
+    "rules": {
+        "indent": [
+            "error",
+            4
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        // "semi": [
+        //     "error",
+        //     "always"
+        // ],
+        "max-len": [
+            "error",
+            {
+                "code": 150
+            }
+        ],
+        "comma-dangle": [
+            "warn",
+            {
+                "arrays": "always-multiline",
+                "objects": "always-multiline",
+                "imports": "never",
+                "exports": "never",
+                "functions": "never"
+            }
+        ],
+        "camelcase": [
+            "error"
+        ]
+    }
+}
