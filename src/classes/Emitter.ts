@@ -15,16 +15,16 @@ class Emitter extends EventEmitter implements Emitter {
    * Initializes the WebSocket to receive and emit events.
    */
   constructor(protected config: CoolBotListConfig) {
-    super();
+      super();
 
-    this.socket.on("vote", (vote: Vote, userId: snowflake) => {
-      const date = new Date(vote.date);
-      vote.date = date;
+      this.socket.on("vote", (vote: Vote, userId: snowflake) => {
+          const date = new Date(vote.date);
+          vote.date = date;
 
-      if (vote.bot === this.config.client.user?.id) {
-        this.emit(Events.vote, vote, userId);
-      }
-    });
+          if (vote.bot === this.config.client.user?.id) {
+              this.emit(Events.vote, vote, userId);
+          }
+      });
   }
 }
 
