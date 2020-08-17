@@ -114,8 +114,7 @@ client.on("ready", () => {
     console.log("asfd");
     const botList = new CoolBotList({
         client,
-        token:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNDgxMTU4NjMyMDA4OTc0MzM3In0sImlhdCI6MTU5NjgyNjU4Mn0.71mY03QCkHvmZWgb3_1ahUv0xTf8td_pLdgDOj2ZVRo",
+        token: "coolbotlist",
     });
 
     // // sends EVERYTHING

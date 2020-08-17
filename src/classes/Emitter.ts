@@ -1,6 +1,6 @@
 import { EventEmitter } from "events";
 import io from "socket.io-client";
-import { snowflake } from "../interfaces/snowflake";
+import { snowflake } from "../interfaces/Snowflake";
 import Vote from "../interfaces/Vote";
 import CoolBotListConfig from "../interfaces/CoolBotListConfig";
 import { Events } from "../constants/Events";
