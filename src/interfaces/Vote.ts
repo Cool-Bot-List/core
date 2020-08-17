@@ -1,4 +1,4 @@
-import { snowflake } from "./snowflake";
+import { snowflake } from "./Snowflake";
 
 /**
  * Represents a bot vote object.
