@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Client } from "discord.js";
-import InitData from "../interfaces/InitData";
+import SendData from "../interfaces/SendData";
 import CoolBotListConfig from "../interfaces/CoolBotListConfig";
 import Emitter from "./Emitter";
 
@@ -18,11 +18,11 @@ export default class CoolBotList extends Emitter {
     }
 
     /**
-   * Initialize your discord bot.
+   * Send data from your discord bot.
    * @param data - Information about how to send the data.
    */
     // should we call this send instead?
-    public init(data?: InitData): void {
+    public send(data?: SendData): void {
         let sendTotalGuilds: boolean | undefined = data?.sendTotalGuilds;
         let sendTotalUsers: boolean | undefined = data?.sendTotalUsers;
         let sendPresence: boolean | undefined = data?.sendPresence;
@@ -118,9 +118,9 @@ client.on("ready", () => {
     });
 
     // // sends EVERYTHING
-    // botList.init();
+    // botList.send();
     // // sends everything BUT presence
-    // botList.init({ sendPresence: false });
+    // botList.send({ sendPresence: false });
     // // ONLY sends presence
     // botList.sendPresence();
     botList.on("vote", (vote, userId) => {
