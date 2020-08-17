@@ -21,7 +21,7 @@
   "dependencies": {
     "@types/axios": "^0.14.0",
     "axios": "^0.19.2",
-    "discord.js": "^12.2.0",
+    "discord.js": "^12.3.1",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7"
   }
