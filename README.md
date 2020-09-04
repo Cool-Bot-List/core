@@ -27,7 +27,7 @@ If everything goes well you'll be prompted with a 201 status code and this JSON.
 <br>
 If you're missing parameters you'll be prompted with a 400 status code and this JSON.
 <br>
-```json
+``` json
 { 
     message: "You are missing properties in the body.", 
     error: "Bad Request." 
@@ -36,7 +36,7 @@ If you're missing parameters you'll be prompted with a 400 status code and this 
 <br>
 If the bot isn't found in our database we'll return with a 404 error and a JSON looking like this.
 <br>
-```json
+``` json
 { 
     message: "The bot was not found.", 
     error: "Not Found."
@@ -45,7 +45,7 @@ If the bot isn't found in our database we'll return with a 404 error and a JSON 
 <br>
 If you experience a status code of 500 please mention the website administrators. The JSON should look like this.
 <br>
-```json
+``` json
 { 
     message: "Something went wrong and the bot didn't update", 
     error: "Internal Server Error." 
