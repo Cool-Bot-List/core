@@ -1,1 +1,1 @@
-API Wrapper for the bot list.
+#Cool Bot List Wrapper Documentation.
