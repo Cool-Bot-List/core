@@ -2,9 +2,10 @@
 
 
 ## Installing the NPM package.
-
+Run the folowing command in a termnal or command line.
 `npm i coolbotlist.js --save`
 
+## Setting the Wrapper Up
 Once the package has successfully been installed you'll need to create a new instance of the wrapper. You're required to pass the client as the first parameter and your API token as the second.
 
 ```js
