@@ -3,7 +3,10 @@
 
 ## Installing the NPM package.
 Run the folowing command in a termnal or command line.
-`npm i coolbotlist.js --save`
+
+```
+npm i coolbotlist.js 
+```
 
 ## Setting the Wrapper Up
 Once the package has successfully been installed you'll need to create a new instance of the wrapper. You're required to pass the client as the first parameter and your API token as the second.
@@ -15,10 +18,13 @@ const cbl = new CoolBotList({
    token: "YOUR COOLBOTLIST TOKEN"
 });
 ```
+
 After creating a instance of the CoolBotList class. You will want to send the data. You can do that using the init method.
+
 ```ts
 cbl.init();
 ```
+
 CB
 If everything goes well you'll be prompted with a 201 status code and this JSON.
 
@@ -33,7 +39,7 @@ If you're missing parameters you'll be prompted with a 400 status code and this 
 ```json
 { 
     message: "You are missing properties in the body.", 
-    error: "Bad Request." 
+    error: 400
 }
 ```
 
@@ -42,7 +48,7 @@ If the bot isn't found in our database we'll return with a 404 error and a JSON 
 ```json
 { 
     message: "The bot was not found.", 
-    error: "Not Found."
+    error: 404 
 }
 ```
 
@@ -51,7 +57,7 @@ If you experience a status code of 500 please mention the website administrators
 ```json
 { 
     message: "Something went wrong and the bot didn't update", 
-    error: "Internal Server Error." 
+    error: 500 
 }
 ```
 
