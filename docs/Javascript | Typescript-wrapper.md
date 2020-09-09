@@ -9,12 +9,16 @@ Once the package has successfully been installed you'll need to create a new ins
 
 ```js
 const CoolBotList = require('coolbotlist.js');
-const CBL = new CoolBotList({
+const cbl = new CoolBotList({
    client,
    token: "YOUR COOLBOTLIST TOKEN"
 });
 ```
-
+After creating a instance of the CoolBotList class. You will want to send the data. You can do that using the init method.
+```ts
+cbl.init();
+```
+CB
 If everything goes well you'll be prompted with a 201 status code and this JSON.
 
 ```json
