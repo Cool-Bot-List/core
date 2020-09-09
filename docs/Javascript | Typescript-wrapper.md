@@ -19,13 +19,14 @@ const cbl = new CoolBotList({
 });
 ```
 
+## Sending Data
 After creating a instance of the CoolBotList class. You will want to send the data. You can do that using the init method.
 
 ```ts
 cbl.init();
 ```
 
-CB
+### JSON Responses
 If everything goes well you'll be prompted with a 201 status code and this JSON.
 
 ```json
