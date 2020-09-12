@@ -1,3 +1,4 @@
+import "dotenv/config";
 import axios from "axios";
 import { Client } from "discord.js";
 import SendData from "../interfaces/SendData";
