@@ -122,7 +122,7 @@ export class CoolBotList extends Emitter {
 
 // Example
 const client = new Client();
-client.login("NzM1MjczMzQ4ODc1MDI2NTcz.Xxd2qw.xJH9-bVyp5vqjVVpG1bk6dFjbBs");
+client.login();
 
 client.on("ready", () => {
     console.log("logged in");
