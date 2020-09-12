@@ -123,7 +123,7 @@ export class CoolBotList extends Emitter {
 
 // Example
 const client = new Client();
-client.login();
+client.login(process.env.BOT_TOKEN);
 
 client.on("ready", () => {
     console.log("logged in");
