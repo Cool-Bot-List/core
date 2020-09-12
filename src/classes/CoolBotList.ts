@@ -55,7 +55,7 @@ export class CoolBotList extends Emitter {
         setInterval(async () => {
             try {
                 await axios.put(
-                    "http://localhost:5000/api/bots/client",
+                    "http://localhost:5000/api/update-my-bot",
                     {
                         client: dataToSend ? dataToSend : this.config.client,
                         presence: this.config.client.user!.presence,
@@ -80,7 +80,7 @@ export class CoolBotList extends Emitter {
     public sendPresence(): void {
         setInterval(async () => {
             axios.put(
-                "http://localhost:5000/api/bots/client",
+                "http://localhost:5000/api/update-my-bot",
                 {
                     client: this.config.client,
                     presence: this.config.client.user!.presence,
@@ -103,7 +103,7 @@ export class CoolBotList extends Emitter {
     public sendTotalGuilds(): void {
         setInterval(async () => {
             axios.put(
-                "http://localhost:5000/api/bots/client",
+                "http://localhost:5000/api/update-my-bot",
                 {
                     client: this.config.client,
                     presence: this.config.client.user!.presence,
