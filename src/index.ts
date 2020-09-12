@@ -1,4 +1,4 @@
-import CoolBotList from "./classes/CoolBotList";
+import { CoolBotList } from "./classes/CoolBotList";
+module.exports = { CoolBotList };
 
-export default CoolBotList;
-module.exports = CoolBotList;
+export { CoolBotList } from "./classes/CoolBotList";
