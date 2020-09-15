@@ -1,5 +1,5 @@
 {
-    "name": "cool-bot-list",
+    "name": "coolbotlist.js",
     "version": "1.0.0",
     "description": "A JavaScript/Typescript API wrapper for Cool Bot List.",
     "main": "dist/index.js",
