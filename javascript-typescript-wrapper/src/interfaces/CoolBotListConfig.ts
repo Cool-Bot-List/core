@@ -1,4 +1,5 @@
 import { Client } from "discord.js";
+import { PresenceResolvable } from "./PresenceResolvable";
 
 export default interface CoolBotListConfig {
     /**
@@ -14,5 +15,8 @@ export default interface CoolBotListConfig {
      * The default is 90000.
      */
     interval?: number;
-
+    /**
+     * The presence the bot will appear as in the Cool Bot List website.
+     */
+    presence?: PresenceResolvable;
 }

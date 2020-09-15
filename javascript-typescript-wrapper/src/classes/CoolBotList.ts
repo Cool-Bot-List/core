@@ -17,7 +17,6 @@ export class CoolBotList extends Emitter {
             if (900000 > config.interval) config.interval = 90000;
         } else if (config.interval === undefined) config.interval = 90000;
         this.handleEvents()
-
     }
 
     private handleEvents(): void {
@@ -58,7 +57,9 @@ export class CoolBotList extends Emitter {
                     "http://localhost:5000/api/update-my-bot",
                     {
                         client: dataToSend ? dataToSend : this.config.client,
-                        presence: this.config.client.user!.presence,
+                        presence: {
+                            status: this.config.presence
+                        },
                         sendTotalGuilds,
                         sendTotalUsers,
                         sendPresence,
@@ -83,7 +84,9 @@ export class CoolBotList extends Emitter {
                 "http://localhost:5000/api/update-my-bot",
                 {
                     client: this.config.client,
-                    presence: this.config.client.user!.presence,
+                    presence: {
+                        status: this.config.presence
+                    },
                     sendTotalGuilds: false,
                     sendTotalUsers: false,
                     sendPresence: true,
@@ -106,7 +109,9 @@ export class CoolBotList extends Emitter {
                 "http://localhost:5000/api/update-my-bot",
                 {
                     client: this.config.client,
-                    presence: this.config.client.user!.presence,
+                    presence: {
+                        status: this.config.presence
+                    },
                     sendTotalGuilds: true,
                     sendTotalUsers: false,
                     sendPresence: false,
@@ -121,29 +126,30 @@ export class CoolBotList extends Emitter {
     }
 }
 
-// Example
-const client = new Client();
-client.login(process.env.BOT_TOKEN);
+// // Example
+// const client = new Client();
+// client.login(process.env.BOT_TOKEN);
 
-client.on("ready", () => {
-    console.log("logged in");
-    const botList = new CoolBotList({
-        client,
-        token: "coolbotlist",
-    });
+// client.on("ready", () => {
+//     console.log("logged in");
+//     const botList = new CoolBotList({
+//         client,
+//         token: "coolbotlist",
+//         presence: ""
+//     });
 
-    // // sends EVERYTHING
-    // botList.send();
-    // // sends everything BUT presence
-    // botList.send({ sendPresence: false });
-    // // ONLY sends presence
-    // botList.sendPresence();
-    botList.on("vote", (vote, userId) => {
-        console.log(`A user voted: ${userId}`);
-        console.log(`Vote: ${JSON.stringify(vote)}`);
-        console.log(vote);
-    });
-    client.user.setPresence({
-        status: "invisible",
-    })
-});
+//     // // sends EVERYTHING
+//     // botList.send();
+//     // // sends everything BUT presence
+//     // botList.send({ sendPresence: false });
+//     // // ONLY sends presence
+//     // botList.sendPresence();
+//     botList.on("vote", (vote, userId) => {
+//         console.log(`A user voted: ${userId}`);
+//         console.log(`Vote: ${JSON.stringify(vote)}`);
+//         console.log(vote);
+//     });
+//     client.user.setPresence({
+//         status: "invisible",
+//     })
+// });
