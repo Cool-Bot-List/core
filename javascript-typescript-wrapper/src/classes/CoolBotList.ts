@@ -1,10 +1,11 @@
+import "dotenv/config";
 import axios from "axios";
 import { Client } from "discord.js";
-import InitData from "../interfaces/InitData";
+import SendData from "../interfaces/SendData";
 import CoolBotListConfig from "../interfaces/CoolBotListConfig";
 import Emitter from "./Emitter";
 
-export default class CoolBotList extends Emitter {
+export class CoolBotList extends Emitter {
     /**
    * A way to send the bots data to localhost:3000
    * @param config - Settings for the the CoolBotList
@@ -15,14 +16,27 @@ export default class CoolBotList extends Emitter {
         if (config.interval) {
             if (900000 > config.interval) config.interval = 90000;
         } else if (config.interval === undefined) config.interval = 90000;
+        this.handleEvents()
+    }
+
+    private handleEvents(): void {
+        this.config.client.on("guildCreate", guild => {
+            this.send({ sendTotalGuilds: true, sendTotalUsers: false, sendPresence: false }, [guild.id])
+        })
+        this.config.client.on("guildMemberAdd", user => {
+            this.send({ sendTotalGuilds: false, sendTotalUsers: true, sendPresence: false }, [user.id])
+        })
+        this.config.client.on("presenceUpdate", presence => {
+            if (presence.userID === this.config.client.user.id)
+                this.send({ sendTotalGuilds: false, sendTotalUsers: true, sendPresence: false }, presence)
+        })
     }
 
     /**
-   * Initialize your discord bot.
+   * Send data from your discord bot.
    * @param data - Information about how to send the data.
    */
-    // should we call this send instead?
-    public init(data?: InitData): void {
+    public send(data?: SendData, dataToSend?: any): void {
         let sendTotalGuilds: boolean | undefined = data?.sendTotalGuilds;
         let sendTotalUsers: boolean | undefined = data?.sendTotalUsers;
         let sendPresence: boolean | undefined = data?.sendPresence;
@@ -40,10 +54,12 @@ export default class CoolBotList extends Emitter {
         setInterval(async () => {
             try {
                 await axios.put(
-                    "http://localhost:5000/api/bots/client",
+                    "http://localhost:5000/api/update-my-bot",
                     {
-                        client: this.config.client,
-                        presence: this.config.client.user!.presence,
+                        client: dataToSend ? dataToSend : this.config.client,
+                        presence: {
+                            status: this.config.presence
+                        },
                         sendTotalGuilds,
                         sendTotalUsers,
                         sendPresence,
@@ -65,10 +81,12 @@ export default class CoolBotList extends Emitter {
     public sendPresence(): void {
         setInterval(async () => {
             axios.put(
-                "http://localhost:5000/api/bots/client",
+                "http://localhost:5000/api/update-my-bot",
                 {
                     client: this.config.client,
-                    presence: this.config.client.user!.presence,
+                    presence: {
+                        status: this.config.presence
+                    },
                     sendTotalGuilds: false,
                     sendTotalUsers: false,
                     sendPresence: true,
@@ -88,10 +106,12 @@ export default class CoolBotList extends Emitter {
     public sendTotalGuilds(): void {
         setInterval(async () => {
             axios.put(
-                "http://localhost:5000/api/bots/client",
+                "http://localhost:5000/api/update-my-bot",
                 {
                     client: this.config.client,
-                    presence: this.config.client.user!.presence,
+                    presence: {
+                        status: this.config.presence
+                    },
                     sendTotalGuilds: true,
                     sendTotalUsers: false,
                     sendPresence: false,
@@ -106,26 +126,30 @@ export default class CoolBotList extends Emitter {
     }
 }
 
-// Example
-const client = new Client();
-client.login("");
+// // Example
+// const client = new Client();
+// client.login(process.env.BOT_TOKEN);
 
-client.on("ready", () => {
-    console.log("asfd");
-    const botList = new CoolBotList({
-        client,
-        token: "coolbotlist",
-    });
+// client.on("ready", () => {
+//     console.log("logged in");
+//     const botList = new CoolBotList({
+//         client,
+//         token: "coolbotlist",
+//         presence: ""
+//     });
 
-    // // sends EVERYTHING
-    // botList.init();
-    // // sends everything BUT presence
-    // botList.init({ sendPresence: false });
-    // // ONLY sends presence
-    // botList.sendPresence();
-    botList.on("vote", (vote, userId) => {
-        console.log(`A user voted: ${userId}`);
-        console.log(`Vote: ${JSON.stringify(vote)}`);
-        console.log(vote);
-    });
-});
+//     // // sends EVERYTHING
+//     // botList.send();
+//     // // sends everything BUT presence
+//     // botList.send({ sendPresence: false });
+//     // // ONLY sends presence
+//     // botList.sendPresence();
+//     botList.on("vote", (vote, userId) => {
+//         console.log(`A user voted: ${userId}`);
+//         console.log(`Vote: ${JSON.stringify(vote)}`);
+//         console.log(vote);
+//     });
+//     client.user.setPresence({
+//         status: "invisible",
+//     })
+// });

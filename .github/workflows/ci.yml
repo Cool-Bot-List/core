@@ -12,7 +12,5 @@ jobs:
             - uses: actions/setup-node@master
               with:
                   node-version: 12
-            - run: npm ci
-            - run: npm run build
-            - run: npm run lint            
-              
+            - run: cd javascript-typescript-wrapper && npm ci
+            - run: cd javascript-typescript-wrapper && npm run build

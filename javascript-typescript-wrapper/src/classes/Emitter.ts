@@ -22,7 +22,7 @@ class Emitter extends EventEmitter implements Emitter {
           vote.date = date;
 
           if (vote.bot === this.config.client.user?.id) {
-              this.emit(Events.vote, vote, userId);
+              this.emit(Events.VOTE, vote, userId);
           }
       });
   }
