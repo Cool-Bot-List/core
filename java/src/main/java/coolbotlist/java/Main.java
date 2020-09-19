@@ -14,7 +14,7 @@ public class Main {
 
     private static JDA createClient() throws LoginException {
         return JDABuilder
-                .createDefault("NzM1MjczMzQ4ODc1MDI2NTcz.Xxd2qw.9K8gLZMIIpOKA1_qEpF35hsbz_g")
+                .createDefault("")
                 .addEventListeners(new EventHandler())
                 .setActivity(Activity.playing("java"))
                 .build();
