@@ -7,23 +7,23 @@ final class CoolBotList {
     /**
      * The API token.
      */
-    private String token;
+    public String token;
 
     /**
      * The jda used to make your bot.
      */
-    private JDA jda;
+    public JDA jda;
 
     /**
      *  The interval in ms you want to send data to the API at.
      *  The default is 90000.
      */
-    private int interval = 90000;
+    public int interval = 90000;
 
     /**
      * The presence the bot will appear as in the Cool Bot List website.
      */
-    private Presence presence;
+    public Presence presence;
 
     CoolBotList(String token, JDA jda, int interval, Presence presence) {
         this.token = token;
@@ -34,6 +34,7 @@ final class CoolBotList {
         try {
             jda.awaitReady();
             jda.addEventListener(new CoolBotListEventListener());
+            HttpClient.request(this);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
