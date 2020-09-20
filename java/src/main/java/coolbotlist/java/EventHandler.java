@@ -1,6 +1,5 @@
 package coolbotlist.java;
 
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -15,9 +14,7 @@ public class EventHandler extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        Message message = event.getMessage();
-        if (message.getContentRaw().equalsIgnoreCase("yoo"))
-            message.getChannel().sendMessage("wassup").queue();
+        Main.sendEmbed(event);
     }
 
 }
