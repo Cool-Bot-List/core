@@ -15,17 +15,17 @@ public class Main {
     public static String prefix = "c!";
 
     public static void main(String[] args) throws Exception {
-        JDA client = createClient();
+        JDA jda = createClient();
        CoolBotList cbl = new CoolBotListBuilder()
                .setToken("safd")
-               .setInterval(90)
+               .setJda(jda)
                .setPresence(Presence.mobile)
                .build();
     }
 
     private static JDA createClient() throws LoginException {
         return JDABuilder
-                .createDefault("")
+                .createDefault("NzM1MjczMzQ4ODc1MDI2NTcz.Xxd2qw.mOthfyS6ppduAyjdE5drBXodsls")
                 .addEventListeners(new EventHandler())
                 .setActivity(Activity.playing("java"))
                 .build();

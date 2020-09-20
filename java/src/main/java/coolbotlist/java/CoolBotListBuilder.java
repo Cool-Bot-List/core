@@ -10,7 +10,7 @@ public final class CoolBotListBuilder {
     private String token;
 
     /**
-     * The client used to make your bot.
+     * The jda used to make your bot.
      */
     private JDA jda;
 
@@ -22,8 +22,9 @@ public final class CoolBotListBuilder {
 
     /**
      * The presence the bot will appear as in the Cool Bot List website.
+     * The default is online.
      */
-    private Presence presence;
+    private Presence presence = Presence.online;
 
 
 
@@ -41,7 +42,9 @@ public final class CoolBotListBuilder {
      * @param jda The jda to set to.
      * @return
      */
-    public CoolBotListBuilder setJda(JDA jda) {
+    public CoolBotListBuilder setJda(JDA jda) throws Exception {
+        if (!(jda instanceof JDA)) throw new Exception("jda is not instance of JDA");
+
         this.jda = jda;
         return this;
     }
@@ -68,7 +71,8 @@ public final class CoolBotListBuilder {
         return this;
     }
 
-    public CoolBotList build() {
+    public CoolBotList build() throws Exception {
+        if (token == null || jda == null) throw new Exception("Token and jda can't be null.");
         return new CoolBotList(token, jda, interval, presence);
     }
 }
