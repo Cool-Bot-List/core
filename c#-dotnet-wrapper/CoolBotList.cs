@@ -1,14 +1,20 @@
 using System;
+using DSharpPlus;
 
-namespace CoolBotList.NET
+namespace CoolBotList
 {
-    class CoolBotList
+    public class CoolBotList
     {
-        CoolBotList(CoolBotListConfig config)
-        {
-            Console.WriteLine($"{this.ToString()} has been constructed.");
-            Console.WriteLine(config);
 
+        public string Token { private get; set; }
+        public DiscordClient Client { private get; set; }
+        public int Interval { private get; set; }
+        public string Presence { private get; set; }
+
+
+        public CoolBotList()
+        {
+            Console.WriteLine("constructed");
         }
     }
 }

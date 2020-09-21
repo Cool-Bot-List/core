@@ -2,13 +2,14 @@
 using System.Threading.Tasks;
 using DSharpPlus;
 
-namespace CoolBotList.NET
+namespace CoolBotList
 {
     class Program
     {
         public static DiscordClient client;
         public static void Main(string[] args)
         {
+            CoolBotList cbl = new CoolBotList { Token = "sdf" };
             Console.WriteLine("Hello World!");
             MainAsync(args).ConfigureAwait(false).GetAwaiter().GetResult();
         }
