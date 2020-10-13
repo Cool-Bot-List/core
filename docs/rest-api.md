@@ -1,7 +1,9 @@
 # Rest API Documentation
-You can use the Rest API as an alternative option to update your bot. You may want to do this because an API wrapper for your language is not available. 
+
+You can use the Rest API as an alternative option to update your bot. You may want to do this because an API wrapper for your language is not available.
 
 ## Endpoint
+
 Make a put request to the endpoint.
 
 ```
@@ -9,52 +11,40 @@ PUT https://coolbotlistapi.herokuapp.com/update-my-bot
 ```
 
 ## Authorization
+
 To be authenticated, you must add your [Cool Bot List Token](https://coolbotlist.tk/token) to the headers. Your headers should look like this.
 
 ```json
 {
-  "authorization": "Bearer YOUR TOKEN" 
+    "authorization": "Bearer YOUR TOKEN"
 }
 ```
 
 ## Body
+
 The body of the request should contain the data the bot should be updated to. Here is an example of the body.
 
 ```json
-    {
-        "client": {
-          "user": "The ID of the bot to send",
-          "guilds": ["An array of guild IDs the bot is in"],
-          "users": ["An array of users the bot has."]
-      },
-      "presence": { "status": "The status to update to on Cool Bot List. This can be online, idle, dnd, invisible, or mobile." },
-      "sendTotalGuilds": true,
-      "sendTotalUsers": true,
-      "sendPresence": true
-      }
-
-```
-# Response 
-The API will respond with this if you were rate limited.
-
-```json
 {
-    "statusCode": 408,
-    "message": "You have been rate limited. You can't call the api for another 46.598 seconds"
+    "client": {
+        "user": "The ID of the bot to send",
+        "guilds": ["An array of guild IDs the bot is in"],
+        "users": ["An array of user IDs the bot has."]
+    },
+    "presence": { "status": "The status to update to on Cool Bot List. This can be online, idle, dnd, invisible, or mobile." },
+    "sendTotalGuilds": true,
+    "sendTotalUsers": true,
+    "sendPresence": true
 }
 ```
 
-If you are missing properties in the body the response will look like this.
+# Response
+
+If everything saves then the API will respond with this.
 
 ```json
 {
-    "status": 400,
-    "message": "You are missing properties."
+    "message": "Successfully updated the bot's stats.",
+    "status": 201
 }
-```
-
-If everything saves then this will be the response.
-
-```
-Successfully updated the bot's stats.
 ```
