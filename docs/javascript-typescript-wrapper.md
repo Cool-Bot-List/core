@@ -1,4 +1,6 @@
-# Cool Bot List Wrapper Documentation.
+# JavaScript/TypeScript Wrapper Documentation
+This wrapper is a easy way of sending your bots data to [Cool Bot List](https://coolbotlist.tk) without having to setup the Rest or GraphQL API.
+
 
 ## Installing the NPM package.
 
@@ -10,65 +12,55 @@ npm i coolbotlist.js
 
 ## Setting the Wrapper Up
 
-Once the package has successfully been installed you'll need to **create a new instance** of the wrapper. You're required to **pass** an **object** with the discord.js **client** and your [API token](http://localhost:3000/token) that you get from our website.
+You will need to create a new instance of the wrapper. You must to pass an object with the Discord.js client and your [API token](https://coolbotlist.tk/token) that you get from our website.
+
+You can also pass in presence. This is what the bot will appear as on Cool Bot List. Valid presences are online, dnd, away, invisible, mobile. The default is online if you don't pass one.
+
+Remember to create the CoolBotList instance in the ready event of your Discord.js Client.
 
 ```ts
-const CoolBotList = require("coolbotlist.js");
-const cbl = new CoolBotList({
-    client,
-    token: "YOUR COOLBOTLIST TOKEN",
-});
+const { CoolBotList } = require("coolbotlist.js");
+const { Client } = require ("discord.js");
+
+const client = new Client();
+client.login("DISCORD BOT TOKEN");
+
+client.on("ready, () => {
+  const cbl = new CoolBotList({
+      client,
+      presence: "dnd",
+      token: "YOUR COOLBOTLIST TOKEN",
+ });
 ```
 
-If you are using TypeScript or ES6 modules use this instead.
+If you are using TypeScript or ES6 modules use import instead of require.
 
 ```ts
-import CoolBotList from "coolbotlist.js";
+import { CoolBotList } from "coolbotlist.js";
+import { Client } from "discord.js";
 ```
 
 ## Sending Data
 
-After creating a instance of the CoolBotList class. You will want to send the data. You can do that using the init method.
+After creating a instance of the CoolBotList class you need to send the data. You can do that using the send method.
 
 ```ts
-cbl.init();
+cbl.send();
+```
+If you only want to send certain parts of the bot then pass in an object with the data.
+
+```ts
+cbl.send({ sendGuilds: false });
 ```
 
-### JSON Responses
+## Handling Vote Events
 
-If everything goes well you'll be prompted with a 201 status code and this JSON.
+When your bot is voted an event is emitted. You can listen to that event by attaching a callback function.
 
-```json
-{
-    "message": "Successfully updated the bot's stats."
+```ts
+cbl.on("vote", (user, date) => {
+  user.send(`Thanks for voting at ${date.toLocalString()}`);
 }
 ```
 
-If you're missing parameters you'll be prompted with a 400 status code and this JSON.
-
-```json
-{
-    "message": "You are missing properties in the body.",
-    "error": 400
-}
-```
-
-If the bot isn't found in our database we'll return with a 404 error and a JSON looking like this.
-
-```json
-{
-    "message": "The bot was not found.",
-    "error": 404
-}
-```
-
-If you experience a status code of 500 please mention the website administrators. The JSON should look like this.
-
-```json
-{
-    "message": "Something went wrong and the bot didn't update",
-    "error": 500
-}
-```
-
-### Please note this wrapper only works for [Cool Bot List](https://google.com).
+You can do things such as giving a user or price or sending them a thank you message.
