@@ -20,5 +20,10 @@ jobs:
                   npm ci
                   npm start --prefix ../scripts/npm-publish
                   npm publish
+                  git config user.name github-actions
+                  git config user.email github-actions@github.com
+                  git add .
+                  git commit -m 'updated version'
+                  git push
               env:
                   NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
