@@ -1,7 +1,7 @@
 const fs = require("fs/promises");
 const { default: axios } = require("axios");
 const { execSync } = require("child_process");
-
+console.log(process);
 (async function () {
     console.time("Published"); 
     const v = await getVersion();
