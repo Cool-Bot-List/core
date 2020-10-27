@@ -19,5 +19,6 @@ jobs:
                   cd ./javascript-typescript-wrapper
                   npm ci
                   npm start --prefix ../scripts/npm-publish
+                  npm publish
               env:
                   NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
