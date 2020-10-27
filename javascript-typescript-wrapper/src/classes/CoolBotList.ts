@@ -1,33 +1,37 @@
 import axios from "axios";
 import { Client } from "discord.js";
-import SendData from "../interfaces/SendData";
-import CoolBotListConfig from "../interfaces/CoolBotListConfig";
-import Emitter from "./Emitter";
+import { SendData } from "../interfaces/SendData";
+import { CoolBotListConfig } from "../interfaces/CoolBotListConfig";
+import { Emitter } from "./Emitter";
+import { Presence } from "../constants/Presence";
 
 export class CoolBotList extends Emitter {
+    private BASE_URL = "https://coolbotlistapi.herokuapp.com";
+
     /**
-   * A way to send the bots data to localhost:3000
-   * @param config - Settings for the the CoolBotList
-   */
+     * A way to send the bots data to https://coolbotlist.tk
+     * @param config - Settings for the the CoolBotList
+     */
     constructor(protected config: CoolBotListConfig) {
         super(config);
-        if (!config.token || !config.client || !(config.client instanceof Client)) throw new Error("Please provide a valid config.");
+        console.log("constructed")
+        if (!config.token && !config.client && !(config.client instanceof Client)) throw new Error("Please provide a valid config.");
         if (config.interval) {
-            if (900000 > config.interval) config.interval = 90000;
-        } else if (config.interval === undefined) config.interval = 90000;
-        this.handleEvents()
+            if (60000 > config.interval) config.interval = 60000;
+        } else if (config.interval === undefined) config.interval = 60000;
+        if (!config.presence) config.presence = Presence.MOBILE;
+        this.handleEvents();
     }
 
     private handleEvents(): void {
         this.config.client.on("guildCreate", guild => {
             this.send({ sendTotalGuilds: true, sendTotalUsers: false, sendPresence: false }, [guild.id])
-        })
+        });
         this.config.client.on("guildMemberAdd", user => {
             this.send({ sendTotalGuilds: false, sendTotalUsers: true, sendPresence: false }, [user.id])
-        })
-        this.config.client.on("presenceUpdate", presence => {
-            if (presence.userID === this.config.client.user.id)
-                this.send({ sendTotalGuilds: false, sendTotalUsers: true, sendPresence: false }, presence)
+        });
+        this.config.client.on("guildMemberRemove", user => {
+            this.send({ sendTotalGuilds: false, sendTotalUsers: true, sendPresence: false }, [user.id])
         })
     }
 
@@ -49,11 +53,10 @@ export class CoolBotList extends Emitter {
             sendTotalUsers = true;
             sendPresence = true;
         }
-
         setInterval(async () => {
             try {
-                await axios.put(
-                    "http://localhost:5000/api/update-my-bot",
+                const r = await axios.put(
+                    `${this.BASE_URL}/update-my-bot`,
                     {
                         client: dataToSend ? dataToSend : this.config.client,
                         presence: {
@@ -69,59 +72,12 @@ export class CoolBotList extends Emitter {
                         },
                     }
                 );
-            } catch (err) {
-                throw new Error(err);
+                console.log(r.data);
             }
-        }, this.config.interval);
-    }
-    /**
-   * Sends the current presence of the bot to the API. (online, dnd, away, invisible, ect. )
-   */
-    public sendPresence(): void {
-        setInterval(async () => {
-            axios.put(
-                "http://localhost:5000/api/update-my-bot",
-                {
-                    client: this.config.client,
-                    presence: {
-                        status: this.config.presence
-                    },
-                    sendTotalGuilds: false,
-                    sendTotalUsers: false,
-                    sendPresence: true,
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${this.config.token}`,
-                    },
-                }
-            );
-        }, this.config.interval);
-    }
-
-    /**
-   * Sends the total amount of guilds that the bot is in.
-   */
-    public sendTotalGuilds(): void {
-        setInterval(async () => {
-            axios.put(
-                "http://localhost:5000/api/update-my-bot",
-                {
-                    client: this.config.client,
-                    presence: {
-                        status: this.config.presence
-                    },
-                    sendTotalGuilds: true,
-                    sendTotalUsers: false,
-                    sendPresence: false,
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${this.config.token}`,
-                    },
-                }
-            );
-        }, this.config.interval);
+            catch (err) {
+                console.log("There was an error:", err.response?.data ? err.response?.data : "server is offline")
+            }
+        }, 7000);
     }
 }
 
@@ -134,7 +90,7 @@ export class CoolBotList extends Emitter {
 //     const botList = new CoolBotList({
 //         client,
 //         token: "coolbotlist",
-//         presence: ""
+//         presence: "dnd"
 //     });
 
 //     // // sends EVERYTHING
@@ -152,3 +108,5 @@ export class CoolBotList extends Emitter {
 //         status: "invisible",
 //     })
 // });
+
+

@@ -1,1 +1,1 @@
-export type PresenceResolvable = "online" | "idle" | "dnd" | "invisible" | "mobile"
+export type PresenceResolvable = "online" | "idle" | "dnd" | "invisible" | "mobile";

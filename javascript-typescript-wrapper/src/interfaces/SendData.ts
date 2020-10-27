@@ -1,4 +1,4 @@
-export default interface SendData {
+export interface SendData {
   /**
    * Whether to send the total amount of guilds the bot is in
    * The default is true.

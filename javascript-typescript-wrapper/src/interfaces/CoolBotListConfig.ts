@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
 import { PresenceResolvable } from "./PresenceResolvable";
 
-export default interface CoolBotListConfig {
+export interface CoolBotListConfig {
     /**
      *  The API token.
      */
@@ -12,7 +12,7 @@ export default interface CoolBotListConfig {
     client: Client;
     /**
      *  The interval in ms you want to send data to the API at.
-     * The default is 90000.
+     * The default is 60000.
      */
     interval?: number;
     /**

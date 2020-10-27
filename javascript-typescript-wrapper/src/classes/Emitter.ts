@@ -1,34 +1,29 @@
 import { EventEmitter } from "events";
 import io from "socket.io-client";
-import { snowflake } from "../interfaces/Snowflake";
-import Vote from "../interfaces/Vote";
-import CoolBotListConfig from "../interfaces/CoolBotListConfig";
+import { CoolBotListConfig } from "../interfaces/CoolBotListConfig";
 import { Events } from "../constants/Events";
+import { User } from "discord.js";
 
 /**
  * The event emitter used to emit events such as votes to the user/bot.
  */
-class Emitter extends EventEmitter implements Emitter {
-  private socket = io("http://localhost:5000");
+class CoolBotListEmitter extends EventEmitter implements CoolBotListEmitter {
+  private socket = io("https://coolbotlistapi.herokuapp.com");
 
   /**
    * Initializes the WebSocket to receive and emit events.
    */
   constructor(protected config: CoolBotListConfig) {
-      super();
+    super();
 
-      this.socket.on("vote", (vote: Vote, userId: snowflake) => {
-          const date = new Date(vote.date);
-          vote.date = date;
-
-          if (vote.bot === this.config.client.user?.id) {
-              this.emit(Events.VOTE, vote, userId);
-          }
-      });
+    this.socket.on("new-vote", (user: { id: string }) => {
+      this.emit(Events.VOTE, config.client.users.cache.get(user.id), new Date());
+    });
   }
 }
 
-declare interface Emitter {
-  on(event: "vote", listener: (vote: Vote, userId: snowflake) => void): this;
+declare interface CoolBotListEmitter {
+  on(event: "vote", listener: (user: User, date: Date) => void): this;
 }
-export default Emitter;
+
+export const Emitter = CoolBotListEmitter;
