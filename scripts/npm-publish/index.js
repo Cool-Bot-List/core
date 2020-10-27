@@ -6,7 +6,7 @@ console.log(process);
     console.time("Published"); 
     const v = await getVersion();
     await updatePackageJson(v);
-    build();
+ //   build();
     publish();
     commitChanges(v);
     console.timeEnd("Published");
