@@ -3,11 +3,13 @@ const { default: axios } = require("axios");
 const { execSync } = require("child_process");
 
 (async function () {
+    console.time("Published"); 
     const v = await getVersion();
     await updatePackageJson(v);
     build();
     publish();
     commitChanges(v);
+    console.timeEnd("Published");
 })();
 
 
