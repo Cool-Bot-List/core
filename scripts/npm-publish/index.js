@@ -18,7 +18,7 @@ async function getVersion() {
     const { data } = await axios.get("https://api.github.com/repos/Cool-Bot-List/Cool-Bot-List-API/releases");
 
     console.log(`Fetched data: ${JSON.stringify(data, null, 2)}`);
-    return data[data.length - 1].tag_name.split("v")[1];
+    return data[0].tag_name.split("v")[1];
 }
 
 async function updatePackageJson(version) {
@@ -40,7 +40,7 @@ async function updatePackageJson(version) {
 
 function build() {
     console.log("Building...");
-    console.log(execSync("cd ../../javascript-typescript-wrapper && npm run build").toString());
+    console.log(execSync("cd ../../javascript-typescript-wrapper && npm i && npm run build").toString());
 }
 function publish() {
     console.log("Publishing...");
