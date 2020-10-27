@@ -8,7 +8,7 @@ console.log(process);
     await updatePackageJson(v);
     build();
     // publish();
-    commitChanges(v);
+    // commitChanges(v);
     console.timeEnd("Published");
 })();
 
