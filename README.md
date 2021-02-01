@@ -1,1 +1,3 @@
-API Wrapper for the bot list.
+# API Wrapper for the bot list.
+
+## WIP
