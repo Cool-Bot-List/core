@@ -34,7 +34,7 @@
     "socket.io-client": "^2.3.0",
     "discord.js": "^12.3.1",
     "typescript": "^4.0.2",
-    "ts-node": "^9.0.0"
+    "ts-node": "^10.0.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
